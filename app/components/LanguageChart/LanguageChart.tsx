@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import PieChart from "../Charts/PieChart";
+import { METRICS_APP_API_URL } from "@/app/constants/api";
 
 interface LanguageStat {
   language: string;
@@ -9,7 +10,7 @@ interface LanguageStat {
 }
 
 const fetchLanguageStats = async (): Promise<LanguageStat[]> => {
-  const res = await fetch("http://localhost:3000/language-chart");
+  const res = await fetch(`${METRICS_APP_API_URL}/language-chart`);
   if (!res.ok) throw new Error("Failed to fetch language stats");
   return res.json();
 };

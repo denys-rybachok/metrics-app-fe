@@ -10,6 +10,7 @@ import MetricFormDialog from "../Metric/MetricFormDialog";
 import { MetricEnum } from "@/app/enums/metric.enum";
 import { getDatesForPeriod } from "@/app/services/dates.service";
 import { PERIODS } from "@/app/constants/periods";
+import { METRICS_APP_API_URL } from "@/app/constants/api";
 
 const GeneralMetrics = () => {
   const [period, setPeriod] = useState("currentWeek");
@@ -22,7 +23,7 @@ const GeneralMetrics = () => {
     queryKey: ["generalMetrics", startDate, endDate],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:3000/metrics/general?startDate=${startDate}&endDate=${endDate}`
+        `${METRICS_APP_API_URL}/metrics/general?startDate=${startDate}&endDate=${endDate}`
       );
       if (!res.ok) throw new Error("Failed to fetch metrics");
       return res.json();

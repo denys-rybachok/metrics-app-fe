@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { MetricEnum } from "@/app/enums/metric.enum";
+import { METRICS_APP_API_URL } from "@/app/constants/api";
 
 interface MetricFormDialogProps {
   value: number;
@@ -36,20 +37,16 @@ const MetricFormDialog = ({
     mode: "onChange",
   });
 
-  console.log("keyName", keyName);
-
   const watchedValue = watch("value");
 
   const onSubmit = async (formData: { value: number }) => {
     if (formData.value === value) return;
-    const res = await fetch(`http://localhost:3000/metrics/${keyName}`, {
+    const res = await fetch(`${METRICS_APP_API_URL}/metrics/${keyName}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ value: formData.value }),
     });
-
     if (!res.ok) throw new Error("Failed to update metric");
-
     onSuccess();
   };
 
